@@ -1,0 +1,44 @@
+{{>layout/header}}
+<div class="content" id="content">
+    <div class="tit_area">
+        <h2>게시글 등록</h2>
+        <ul class="location">
+        </ul>
+    </div>
+    <div class="tableSt03">
+        <table class="gridTable">
+            <colgroup>
+                <col width="30%"/>
+                <col width="70%"/>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th><strong>제목</strong></th>
+                    <td>
+                        <p class="input_area"><input type="text" class="" id="title" placeholder="제목을 입력하세요."/></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><strong>작성자</strong></th>
+                    <td>
+                        <p class="input_area"><input type="text" class="" id="author" placeholder="작성자를 입력하세요."/></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><strong>내용</strong></th>
+                    <td>
+                        <p class="input_area"><textarea class="form-" id="content" placeholder="내용을 입력하세요." style="resize:none;"></textarea></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="btn_area_center">
+            <span class="right">
+                <a href="javascript:void(0);" role="button" class="btn_type03" id="btn-save">등록</a>
+                <a href="/" role="button" class="btn_type02">취소</a>
+            </span>
+
+        </div>
+    </div>
+</div>
+{{>layout/footer}}

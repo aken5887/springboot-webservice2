@@ -2,6 +2,7 @@ buildscript {
 	/** build.gralde 전역변수 */
 	ext {
 		springBootVersion = '2.4.1'
+		queryDslVersion = '4.4.0'
 	}
 	repositories {
 		mavenCentral()
@@ -19,7 +20,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'com.toyproject'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = "8"
 
 repositories {
 	mavenCentral()
@@ -27,6 +28,18 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.h2database:h2'
+	implementation 'org.springframework.boot:spring-boot-starter-mustache'
+
+	// QueryDSL
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	annotationProcessor(
+			"javax.persistence:javax.persistence-api",
+			"javax.annotation:javax.annotation-api",
+			"com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -35,3 +48,4 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+targetCompatibility = JavaVersion.VERSION_11
