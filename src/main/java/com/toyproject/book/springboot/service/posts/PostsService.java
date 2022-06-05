@@ -3,17 +3,20 @@ package com.toyproject.book.springboot.service.posts;
 import com.toyproject.book.springboot.domian.posts.Posts;
 import com.toyproject.book.springboot.domian.posts.PostsCustomRepository;
 import com.toyproject.book.springboot.domian.posts.PostsRepository;
-import com.toyproject.book.springboot.web.dto.PostsListResponseDto;
-import com.toyproject.book.springboot.web.dto.PostsResponseDto;
-import com.toyproject.book.springboot.web.dto.PostsSaveRequestDto;
-import com.toyproject.book.springboot.web.dto.PostsUpdateRequestDto;
+import com.toyproject.book.springboot.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PostsService {
@@ -46,5 +49,11 @@ public class PostsService {
     public void deletePosts(Long id){
         Posts post = repository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id="+id));
         repository.delete(post);
+    }
+
+
+    @Transactional(readOnly = true)
+    public Page<PostsListResponseDto> getPostPageList(Pageable pageable, PostsListRequestDto dto){
+       return customRepository.getPostByPaging(pageable, dto);
     }
 }

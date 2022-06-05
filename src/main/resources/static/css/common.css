@@ -231,7 +231,7 @@ select::-ms-expand {display: none; /*display: block\0/IE8+9; */}
 /* layout */
 #wrap {font-size:0; background:#fff; overflow-y:auto; overflow-x:hidden;}
 .header {border-bottom:1px solid #e0e0e0; height:90px;}
-.header .head {width:1280px; margin:0 auto;}
+.header .head {width:996px; margin:0 auto;}
 .header .head:after {content:''; display:block; clear:both;}
 .header .head h1 {float:left; padding:24px 0 0 42px;}
 .header .head .search_box {float:left; margin-left:154px; padding-top:22px; position:relative; }

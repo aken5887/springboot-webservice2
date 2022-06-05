@@ -24,6 +24,21 @@ let main = {
                 _this.delete();
             }
         });
+        $('#btn-search').click(function(){
+            $("#search-form").submit();
+        });
+
+        let selType = $("#selType").val();
+        let selKeyword = $("#selKeyword").val();
+
+        if(selType != '' && selType != undefined){
+            $("#type").val(selType);
+        }
+        if(selKeyword != '' && selKeyword != undefined){
+            $("#keyword").val(selKeyword);
+        }
+        let currentPNo = $("#currentPNo").val();
+        $("#pageEle"+currentPNo).addClass("on");
     },
     save : function () {
          let data = {
@@ -85,3 +100,27 @@ let main = {
 };
 
 main.init();
+
+function fn_move_page(page, moveNo) {
+     let movePageNo = page + moveNo;
+     $("#page").val(movePageNo);
+     $("#search-form").submit();
+}
+
+function fn_search(e){
+    if(e.keyCode == 13){
+        $("#search-form").submit();
+    }
+}
+
+function fn_update_user_auth(){
+    $.ajax({
+        method : 'GET',
+        url : '/api/v1/user/auth'
+    }).done(function(){
+        alert("정상적으로 변경되었습니다.\n다시 로그인 해주세요.");
+        window.location.href = '/';
+    }).fail(function(res){
+        alert(JSON.stringify(res));
+    });
+}

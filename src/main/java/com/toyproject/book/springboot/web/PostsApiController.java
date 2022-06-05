@@ -1,6 +1,9 @@
 package com.toyproject.book.springboot.web;
 
+import com.toyproject.book.springboot.config.auth.LoginUser;
+import com.toyproject.book.springboot.config.auth.dto.SessionUser;
 import com.toyproject.book.springboot.service.posts.PostsService;
+import com.toyproject.book.springboot.service.user.UserService;
 import com.toyproject.book.springboot.web.dto.PostsResponseDto;
 import com.toyproject.book.springboot.web.dto.PostsSaveRequestDto;
 import com.toyproject.book.springboot.web.dto.PostsUpdateRequestDto;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostsApiController {
 
     private final PostsService postsService;
+    private final UserService userService;
 
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto){
@@ -33,4 +37,10 @@ public class PostsApiController {
         postsService.deletePosts(id);
         return id;
     }
+
+    @GetMapping("/api/v1/user/auth")
+    public void userAuth(@LoginUser SessionUser user){
+        userService.updateUserAuth(user);
+    }
+
 }

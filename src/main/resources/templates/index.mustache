@@ -8,10 +8,52 @@
 {{>layout/header}}
     <div id="content" class="content">
         <div class="tit_area">
-            <h2>스프링 부트로 시작하는 웹 서비스 Ver.2</h2>
+            <h2>Sample Page</h2>
             <!--            <ul class="location">목록</ul>-->
         </div>
         <div class="tableSt01">
+            <form name="searchForm" id="search-form" method="GET" action="/">
+                <input type="hidden" name="page" id="page" value="0"/>
+                {{#requestDto.type}}
+                <input type="hidden" name="selType" id="selType" value="{{requestDto.type}}"/>
+                {{/requestDto.type}}
+                {{#requestDto.keyword}}
+                <input type="hidden" name="selKeyword" id="selKeyword" value="{{requestDto.keyword}}"/>
+                {{/requestDto.keyword}}
+                <input type="hidden" name="currentPNo" id="currentPNo" value="{{pageDto.currentPageNo}}"/>
+                <table>
+                    <caption>검색조건</caption>
+                    <colgroup>
+                        <col width="85px"/>
+                        <col widhth="*"/>
+                        <col width="85px"/>
+                        <col width="*"/>
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <strong>검색</strong>
+                            </th>
+                            <td colspan="3">
+                                <div>
+                                    <span class="input_days">
+                                        <select name="type" class="in_select" id="type" title="기간설정">
+                                            <option value="1">제목</option>
+                                            <option value="2">작성자</option>
+                                        </select>
+                                        <span class="input_area mal10">
+                                             <input type="text" title="검색" name="keyword" id="keyword" value=""
+                                                    onkeyup="javascript:fn_search(e);"
+                                                    placeholder="검색할 단어를 입력해주세요.">
+                                        </span>
+                                    </span>
+                                    <button type="button" class="btn_search" id="btn-search" >검색</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
             <p class="point_gr srch_btm">
                 <span class="fr">
                     <a href="/posts/save" role="button" class="btn_susu color">글 등록</a>
@@ -22,8 +64,12 @@
         <div class="result_area">
             <div class="tableTop">
                 <div class="left_tab" id="left_tab">
-                    <span id="totalPage">{{totalPage}}</span>건
+                    총 게시글 :
+                    {{#pageDto.totalPage}}
+                    <span id="totalPage">{{pageDto.totalPage}}</span>건
+                    {{/pageDto.totalPage}}
                 </div>
+
                 <div class="right">
                     <span class="selbox"></span>
                 </div>
@@ -45,10 +91,26 @@
             </div>
             <div class="paging" id="pagingInfo">
                 <ul>
-                    <li class="first"><a href="#">처음으로</a></li>
-                    <li class="prev"><a href="#">이전</a></li>
-                    <li class="on"><a href="#">1</a></li>
-                    <li class="next"><a href="#">다음</a></li>
+                    <li class="first"><a href="javascript:fn_move_page('1');">처음으로</a></li>
+                    <li class="prev">
+                        {{#pageDto.hasPrev}}
+                            <a href="javascript:fn_move_page({{pageDto.previousPageNo}}, 0);" role="button">이전</a>
+                        {{/pageDto.hasPrev}}
+                        {{^pageDto.hasPrev}}
+                            <a href="javascript:alert('첫페이지입니다;');" role="button">이전</a>
+                        {{/pageDto.hasPrev}}
+                    </li>
+                    {{#pageDto.pageList}}
+                            <li class="" id="pageEle{{value}}"><a href="javascript:fn_move_page({{value}}, -1);">{{value}}</a></li>
+                    {{/pageDto.pageList}}
+                    <li class="next">
+                       {{#pageDto.hasNext}}
+                           <a href="javascript:fn_move_page({{pageDto.nextPageNo}}, 0);" role="button">다음</a>
+                       {{/pageDto.hasNext}}
+                       {{^pageDto.hasNext}}
+                           <a href="javascript:alert('마지막페이지입니다;');" role="button">다음</a>
+                       {{/pageDto.hasNext}}
+                   </li>
                 </ul>
             </div>
         </div>

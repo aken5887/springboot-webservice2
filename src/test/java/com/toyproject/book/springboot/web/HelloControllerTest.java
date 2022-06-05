@@ -1,9 +1,15 @@
 package com.toyproject.book.springboot.web;
 
+import com.toyproject.book.springboot.config.auth.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -21,7 +27,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * 선언할 경우 @Controller, @ControllerAdvice 등 사용
  * 단, @Service, @Component, @Repository 등은 사용 불가
  */
-@WebMvcTest(controllers = HelloController.class)
+@WebMvcTest(controllers = HelloController.class,
+excludeFilters = {
+    @ComponentScan.Filter(type= FilterType.ASSIGNABLE_TYPE, classes= SecurityConfig.class)
+})
+//@MockBean(JpaMetamodelMappingContext.class) -> JpaConfig 분리함
 class HelloControllerTest {
 
     @Autowired
@@ -31,6 +41,7 @@ class HelloControllerTest {
      */
     private MockMvc mvc;
 
+    @WithMockUser(roles="GUEST")
     @Test
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
@@ -39,6 +50,7 @@ class HelloControllerTest {
                 .andExpect(content().string("hello"));
     }
 
+    @WithMockUser(roles="GUEST")
     @Test
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";

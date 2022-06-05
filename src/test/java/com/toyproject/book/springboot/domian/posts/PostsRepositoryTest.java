@@ -2,6 +2,7 @@ package com.toyproject.book.springboot.domian.posts;
 
 import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ class PostsRepositoryTest {
     @Autowired
     PostsRepository postsRepository;
 
+    @BeforeEach
+    public void beforeCleanup() {
+        System.out.println(" After method has called ");
+        postsRepository.deleteAll();
+    }
     @AfterEach
     public void cleanup() {
         System.out.println(" After method has called ");

@@ -7,3 +7,18 @@
     <link rel="stylesheet" href="/css/common.css"/>
 </head>
 <body>
+<div class="header">
+    <div class="head">
+        <div class="btn_area" style="padding-right:0px;">
+            {{^userName}}
+                <a href="/oauth2/authorization/google" role="button">구글로그인</a>
+                <a href="/oauth2/authorization/naver" role="button">네이버로그인</a>
+            {{/userName}}
+            {{#userName}}
+                <span id="user" style="margin-right:5px;">{{userName}}</span>
+                <a href="javascript:fn_update_user_auth();" role="button">권한신청</a>
+                <a href="/logout" role="button">로그아웃</a>
+            {{/userName}}
+        </div>
+    </div>
+</div>
