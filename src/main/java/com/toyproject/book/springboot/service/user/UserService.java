@@ -21,9 +21,7 @@ public class UserService {
     @Transactional
     public void updateUserAuth(SessionUser sessionUser){
         Optional<User> user = userRepository.findByEmail(sessionUser.getEmail());
-        User savedUser = user.orElseThrow(()-> {
-            throw new IllegalArgumentException("해당 사용자가 존재하지 않습니다. email="+sessionUser.getEmail());
-        });
+        User savedUser = user.orElseThrow(() -> new IllegalArgumentException("해당 사용자가 존재하지 않습니다. email="+sessionUser.getEmail()));
         log.info("savedUser : {}, {}", savedUser.getName(), savedUser.getEmail());
         savedUser.updateRole();
     }
