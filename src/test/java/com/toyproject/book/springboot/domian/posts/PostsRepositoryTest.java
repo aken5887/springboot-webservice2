@@ -58,6 +58,7 @@ class PostsRepositoryTest {
     public void BaseTimeEntity_등록(){
         // given
         LocalDateTime now = LocalDateTime.now();
+
         Long savedId = postsRepository.save(Posts.builder()
                         .title("title")
                         .content("content")
@@ -69,7 +70,7 @@ class PostsRepositoryTest {
 
         // then
         System.out.println(">>>> createDate="+savedPost.getCreatedDate()+", modified Date ="+savedPost.getModifiedDate());
-
+        System.out.println(">>> now "+now);
         assertThat(savedPost.getCreatedDate()).isAfter(now);
         assertThat(savedPost.getModifiedDate()).isAfter(now);
     }
