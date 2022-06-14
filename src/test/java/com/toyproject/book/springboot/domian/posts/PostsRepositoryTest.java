@@ -33,7 +33,7 @@ class PostsRepositoryTest {
         postsRepository.deleteAll();
     }
 
-    @Test
+//    @Test
     public void 게시글저장_불러오기(){
         // given
         String title = "테스트 게시글";
@@ -54,7 +54,7 @@ class PostsRepositoryTest {
         assertThat(posts.getContent()).isEqualTo(content);
     }
 
-    @Test
+//    @Test
     public void BaseTimeEntity_등록(){
         // given
         LocalDateTime now = LocalDateTime.now();
