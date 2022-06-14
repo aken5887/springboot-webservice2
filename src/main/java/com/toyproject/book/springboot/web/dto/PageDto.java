@@ -33,6 +33,10 @@ public class PageDto {
             pageList.add(i);
         }
 
+        if(pageList.isEmpty()){
+            pageList.add(1);
+        }
+
         this.previousPageNo = pageable.previousOrFirst().getPageNumber();
         this.nextPageNo = pageable.next().getPageNumber();
         this.totalPage = posts.getTotalElements();

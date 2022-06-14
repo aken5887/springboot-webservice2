@@ -49,7 +49,7 @@ public class IndexController {
         model.addAttribute("posts", posts);
         model.addAttribute("pageDto", pageDto);
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("loginUserName", user.getName());
         }
 
         log.info("------------------------------------------");
@@ -63,7 +63,7 @@ public class IndexController {
     @GetMapping("/posts/save")
     public String postsSave(ModelMap model, @LoginUser SessionUser user){
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("loginUserName", user.getName());
         }
         return "posts-save";
     }
@@ -73,7 +73,7 @@ public class IndexController {
     public String postsUpdate(@PathVariable Long id, ModelMap model, @LoginUser SessionUser user){
         model.addAttribute("posts", postsService.findById(id));
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("loginUserName", user.getName());
         }
         return "posts-update";
     }

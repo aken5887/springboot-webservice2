@@ -1,5 +1,14 @@
 let valid = function(msg){
+    let _title = $('#title');
+    let title = _title.val();
     let flag = false;
+
+    if(title == '' || title == undefined){
+        alert("제목은 필수 값입니다.");
+        _title.focus();
+        return flag;
+    }
+
     if(confirm(msg)){
         flag = true;
     }
@@ -44,7 +53,7 @@ let main = {
          let data = {
             title : $('#title').val(),
             author: $('#author').val(),
-            content: $('#content').val()
+            content: $('#contentArea').val()
          };
 
          $.ajax({
@@ -66,7 +75,7 @@ let main = {
 
         let data = {
             title : $('#title').val(),
-            content : $('#content').val()
+            content : $('#contentArea').val()
         };
 
         $.ajax({
@@ -123,4 +132,8 @@ function fn_update_user_auth(){
     }).fail(function(res){
         alert(JSON.stringify(res));
     });
+}
+
+function fn_kakao(){
+    window.location.href = '/oauth2/authorization/kakao';
 }

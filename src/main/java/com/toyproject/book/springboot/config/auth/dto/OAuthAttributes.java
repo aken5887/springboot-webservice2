@@ -32,7 +32,52 @@ public class OAuthAttributes {
         if("naver".equals(registrationId)){
             return ofNaver("id", attributes);
         }
+
+        if("kakao".equals(registrationId)){
+            return ofKakao("id", attributes);
+        }
        return ofGoogle(userNameAttributeName, attributes);
+    }
+
+    private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
+        // kakao는 kakao_account에 유저정보가 있음
+        /**
+         * {
+         * "id": 2285778181,
+         * "connected_at": "2022-06-14T05:37:10Z",
+         * "properties":{
+         * "nickname": "용훈",
+         * "profile_image": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
+         * "thumbnail_image": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg"
+         * },
+         * "kakao_account":{
+         * "profile_nickname_needs_agreement": false,
+         * "profile_image_needs_agreement": false,
+         * "profile":{
+         * "nickname": "용훈",
+         * "thumbnail_image_url": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_110x110.jpg",
+         * "profile_image_url": "http://k.kakaocdn.net/dn/dpk9l1/btqmGhA2lKL/Oz0wDuJn1YV2DIn92f6DVK/img_640x640.jpg",
+         * "is_default_image": true
+         * },
+         * "has_email": true,
+         * "email_needs_agreement": false,
+         * "is_email_valid": true,
+         * "is_email_verified": true,
+         * "email": "aken@kakao.com"
+         * }
+         *}
+         */
+        Map<String, Object> kakaoAccouint = (Map<String, Object>) attributes.get("kakao_account");
+        Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccouint.get("profile");
+
+        return OAuthAttributes.builder()
+                .name((String) kakaoProfile.get("nickname"))
+                .email((String) kakaoAccouint.get("email"))
+                .picture((String) kakaoProfile.get("profile_image_url"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+
     }
 
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
@@ -42,7 +87,7 @@ public class OAuthAttributes {
                 .email((String) response.get("email"))
                 .picture((String)response.get("profile_image"))
                 .attributes(response)
-                .nameAttributeKey(userNameAttributeName)
+                .nameAttributeKey(userNameAttributeName)    
                 .build();
     }
 

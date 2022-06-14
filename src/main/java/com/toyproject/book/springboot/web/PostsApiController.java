@@ -2,6 +2,7 @@ package com.toyproject.book.springboot.web;
 
 import com.toyproject.book.springboot.config.auth.LoginUser;
 import com.toyproject.book.springboot.config.auth.dto.SessionUser;
+import com.toyproject.book.springboot.domian.user.User;
 import com.toyproject.book.springboot.service.posts.PostsService;
 import com.toyproject.book.springboot.service.user.UserService;
 import com.toyproject.book.springboot.web.dto.PostsResponseDto;
@@ -10,12 +11,16 @@ import com.toyproject.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @RestController
 public class PostsApiController {
 
     private final PostsService postsService;
     private final UserService userService;
+
+    private final HttpSession httpSession;
 
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto){

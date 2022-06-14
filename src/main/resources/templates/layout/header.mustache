@@ -10,15 +10,16 @@
 <div class="header">
     <div class="head">
         <div class="btn_area" style="padding-right:0px;">
-            {{^userName}}
+            {{^loginUserName}}
                 <a href="/oauth2/authorization/google" role="button">구글로그인</a>
                 <a href="/oauth2/authorization/naver" role="button">네이버로그인</a>
-            {{/userName}}
-            {{#userName}}
-                <span id="user" style="margin-right:5px;">{{userName}}</span>
+                <img src="/images/kakao_login_small.png" alt="카카로로그인" title="카카오로그인" onclick="javascript:fn_kakao();" style="cursor:pointer;"/>
+            {{/loginUserName}}
+            {{#loginUserName}}
+                <span id="user" style="margin-right:5px;">{{loginUserName}}</span>
                 <a href="javascript:fn_update_user_auth();" role="button">권한신청</a>
                 <a href="/logout" role="button">로그아웃</a>
-            {{/userName}}
+            {{/loginUserName}}
         </div>
     </div>
 </div>

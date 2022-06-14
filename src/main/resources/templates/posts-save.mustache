@@ -15,19 +15,24 @@
                 <tr>
                     <th><strong>제목</strong></th>
                     <td>
-                        <p class="input_area"><input type="text" class="" id="title" placeholder="제목을 입력하세요."/></p>
+                        <p class="input_area"><input type="text" class="" id="title" placeholder="제목을 입력하세요." required/></p>
                     </td>
                 </tr>
                 <tr>
                     <th><strong>작성자</strong></th>
                     <td>
+                    {{^loginUserName}}
                         <p class="input_area"><input type="text" class="" id="author" placeholder="작성자를 입력하세요."/></p>
+                    {{/loginUserName}}
+                    {{#loginUserName}}
+                        <p class="input_area"><input type="text" class="" id="author" value="{{loginUserName}}" readonly/></p>
+                    {{/loginUserName}}
                     </td>
                 </tr>
                 <tr>
                     <th><strong>내용</strong></th>
                     <td>
-                        <p class="input_area"><textarea class="form-" id="content" placeholder="내용을 입력하세요." style="resize:none;"></textarea></p>
+                        <p class="input_area"><textarea class="form-" id="contentArea" placeholder="내용을 입력하세요." style="resize:none;"></textarea></p>
                     </td>
                 </tr>
             </tbody>
