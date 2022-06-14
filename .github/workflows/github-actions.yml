@@ -10,9 +10,9 @@ jobs:
 
     steps:
       - name : gradlew 실행 권한 부여
-        run : chmod +x gradlew
+        run : chmod +x /gradlew
         shell: bash
 
       - name : Build with Gradle
-        run : ./gradlew clean build --info
+        run : /gradlew clean build --info
         shell: bash
