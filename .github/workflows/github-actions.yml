@@ -30,7 +30,7 @@ jobs:
 
       # S3
       - name : Make zip file
-        run :
+        run : |
           mkdir -p before-deploy
           cp script/*.sh before-deploy/
           cp appspec.yml before-deploy/
