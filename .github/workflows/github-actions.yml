@@ -5,6 +5,7 @@ on:
     branches: [ master ]
 
 env:
+  ZIP_NAME : springboot-webservice2
   S3_BUCKET_NAME: aws-webservice-springboot-build
 
 jobs:
@@ -29,7 +30,7 @@ jobs:
 
       # S3
       - name : Make zip file
-        run : zip -r ./$GITHUB_SHA.zip .
+        run : zip -r ./$ZIP_NAME.zip .
         shell : bash
 
       - name : Configure AWS credentials
@@ -40,8 +41,8 @@ jobs:
           aws-region : ap-northeast-2
 
       - name : Upload to S3
-        run : aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$GITHUB_SHA.zip
+        run : aws s3 cp --region ap-northeast-2 ./$ZIP_NAME.zip s3://$S3_BUCKET_NAME/$ZIP_NAME.zip
 
       # codeDeploy
       - name : Code Deploy
-        run : aws deploy create-deployment --application-name aws-springboot-webservice --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name aws-springboot-webservice-group --s3-location bucket=$S3_BUCKET_NAME, bundleType=zip, key=$GITHUB_SHA.zip
+        run : aws deploy create-deployment --application-name aws-springboot-webservice --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name aws-springboot-webservice-group --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$ZIP_NAME.zip
