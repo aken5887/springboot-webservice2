@@ -25,6 +25,7 @@ public class PostsCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
+    
     public List<Posts> findAll(){
         QPosts posts = QPosts.posts;
         List<Posts> result = jpaQueryFactory.selectFrom(posts)
