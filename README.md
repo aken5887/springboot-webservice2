@@ -11,13 +11,15 @@
 * Spring Security
 * Spring Data JPA
 * QueryDSL
-##FrontEnd
+## FrontEnd
 ---
 * Mustache
-##외부 REST API
+## 외부 REST API
+---
 * Google 로그인
 * Naver 로그인
 * Kakao 로그인
-##CI/CD
+## CI/CD
+---
 * Github Action
 * CodeDeploy
