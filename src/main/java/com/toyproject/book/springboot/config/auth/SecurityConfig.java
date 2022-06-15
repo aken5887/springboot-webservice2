@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable().headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/css/**","/images/**","/js/**","/fonts/**","/images/**","/h2-console/**").permitAll()
+                .antMatchers("/","/css/**","/images/**","/js/**","/fonts/**","/images/**","/h2-console/**", "/profile").permitAll()
 //                .antMatchers("api/v1/user/**").hasRole(Role.GUEST.name())
                 .antMatchers("/api/v1/posts/**").hasRole(Role.USER.name())
                 .anyRequest().authenticated()
