@@ -53,7 +53,8 @@ let main = {
          let data = {
             title : $('#title').val(),
             author: $('#author').val(),
-            content: $('#contentArea').val()
+            content: $('#contentArea').val(),
+            fileId : $('#fileId').val()
          };
 
          $.ajax({
@@ -136,4 +137,120 @@ function fn_update_user_auth(){
 
 function fn_kakao(){
     window.location.href = '/oauth2/authorization/kakao';
+}
+
+function fn_trigger_file(){
+    $("input[name=file]").click();
+}
+
+function fn_file_change(tag){
+    if(!isEmpty(tag.value) && isValidFile(tag)){
+        $("#fileList").remove();
+        $("input[name=fileId]").val("");
+
+        let fileList = document.createElement("div");
+        let aTag = document.createElement("a");
+        let spanTag = document.createElement("span");
+
+        fileList.setAttribute("id", "fileList");
+        fileList.setAttribute("style", "padding-top: 5px;");
+        aTag.setAttribute("class", "tag_del");
+        aTag.setAttribute("id", "tag_del");
+        aTag.setAttribute("href", "javascript:fn_delete_file_list();")
+        aTag.innerText = "삭 제";
+        spanTag.innerText = tag.value;
+        spanTag.setAttribute("id", "file_span");
+
+        $(".filse_list")[0].append(fileList);
+        $("#fileList").append(aTag).append(spanTag);
+    }
+}
+
+function fn_delete_file_list(){
+  console.log('fn_delete_file_list called');
+  $("#fileList").remove();
+  $("input[name=file]").val("");
+  $("input[name=fileId]").val("");
+}
+
+function fn_upload_file(){
+   const fileForm = $("#fileForm")[0];
+   const formData = new FormData(fileForm);
+   const uploadFile = $("#fileUpload").val();
+
+   console.log('fileForm : '+fileForm);
+   console.log('formData : '+formData);
+   console.log('uploadFile : '+uploadFile);
+
+   if(isEmpty(uploadFile)){
+      alert("업로드할  파일을 등록하세요.");
+      return;
+   }
+
+   $.ajax({
+        method : 'POST',
+        url : '/upload',
+        enctype : 'multipart/form-data',
+        processData : false,
+        contentType : false,
+        cache : false,
+        timeout : 600000,
+        data : formData
+   }).done(function(res){
+       alert('업로드에 성공하였습니다.');
+       $("input[name=fileId]").val(res);
+       $("#file_span").attr("onclick", "javascript:fn_download();");
+       $("#file_span").css("cursor", "pointer");
+   }).fail(function(res){
+       alert(JSON.stringify(res));
+   });
+}
+
+function fn_download(){
+    const fileId = $("input[name=fileId]").val();
+    if(!isEmpty(fileId)){
+//        $.ajax({
+//            method : 'GET',
+//            url : '/download',
+//            data : { resourcePath : fileId },
+//            dataType : 'json',
+//            contentType : 'application/x-www-form-urlencoded;charset=UTF-8'
+//        }).fail(function(res){
+//           alert(JSON.stringify(res));
+//        });
+        let aDownTag = document.createElement("a");
+        aDownTag.setAttribute("href", "/download?resourcePath="+fileId);
+        document.body.appendChild(aDownTag);
+        aDownTag.click();
+        document.body.removeChild(aDownTag);
+    }
+}
+
+function isEmpty(value){
+    if(value == '' || value == 'undefined' || value == null){
+        return true;
+    }
+    return false;
+}
+
+function isValidFile(file){
+    let fileVal = $(file).val();
+    let ext = fileVal.split('.').pop().toLowerCase();
+    const validExt = ['jpg', 'png', 'jpeg', 'zip', 'gif'];
+
+    if($.inArray(ext, validExt) == -1){
+        alert(validExt + ' 파일만 업로드 할 수 있습니다.');
+        return false;
+    }
+
+    const maxFileSize = 20 * 1024 * 1024; // 20MB
+    let fileSize = $(file)[0].files[0].size;
+
+    if(fileSize > maxFileSize){
+        alert("첨부파일 사이즈는 20MB 이내로 등록 가능합니다.");
+        $(file).val("");
+        return false;
+    }
+
+    return true;
 }

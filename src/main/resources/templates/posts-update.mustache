@@ -36,6 +36,36 @@
                     <p class="input_area"><textarea class="form-" id="contentArea" placeholder="내용을 입력하세요." style="resize:none;">{{posts.content}}</textarea></p>
                 </td>
             </tr>
+            <tr>
+                <th><strong>파일</strong></th>
+                <td>
+                        <span class="input_area" id="file_area">
+                            <form id="fileForm" method="POST" enctype="multipart/form-data" style="margin-left:5px;">
+                                <input type="hidden" name="category" value="board"/>
+                                {{#posts.fileId}}
+                                <input type="hidden" name="fileId" id="fileId" value="{{posts.fileId}}"/>
+                                {{/posts.fileId}}
+                                {{^posts.fileId}}
+                                    <input type="hidden" name="fileId" id="fileId" value=""/>
+                                {{/posts.fileId}}
+                                <input type="file" name="file" id="fileUpload" style="display:none;" onchange="javascript:fn_file_change(this);"/>
+                                <a href="javascript:fn_trigger_file()" class="btn_susu mal5" style="background:#247db0;color:#fff !important;">업로드</a>
+                                <a href="javascript:fn_upload_file()" class="btn_susu mal5">저장</a>
+                            </form>
+                        </span>
+                    <p class="gr_text mat5">
+                        · 파일 용량은 20MB를 초과할 수 없으며, 1개만 등록가능합니다.
+                    </p>
+                    <div class="filse_list">
+                        {{#posts.fileId}}
+                            <div id="fileList" style="padding-top: 5px;">
+                                <a class="tag_del" id="tag_del" href="javascript:fn_delete_file_list();">삭 제</a>
+                                <span id="file_span" onclick="javascript:fn_download();">{{posts.fileId}}</span>
+                            </div>
+                        {{/posts.fileId}}
+                    </div>
+                </td>
+            </tr>
             </tbody>
         </table>
         <div class="btn_area_center">

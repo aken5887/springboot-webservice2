@@ -12,9 +12,12 @@ public class PostsUpdateRequestDto {
     private String title;
     private String content;
 
+    private String fileId;
+
     @Builder
-    public PostsUpdateRequestDto(String title, String content) {
+    public PostsUpdateRequestDto(String title, String content, String fileId) {
         this.title = title;
         this.content = content;
+        this.fileId = fileId;
     }
 }
